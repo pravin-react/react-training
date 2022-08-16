@@ -1,0 +1,20 @@
+ .simple-form{
+    padding: 2% 15%;
+  }
+
+  button.button.btn-primary {
+    padding: 10px 30px;
+    border-radius: 10px;
+  }
+
+  .fields{
+    margin: 10px;
+  }
+  
+  .fields label,.fields input,.fields select,.fields textarea {
+    width: 100%;
+    padding: 10px;
+  }
+  .errorMsg{
+    color: red;
+  }

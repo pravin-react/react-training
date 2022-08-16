@@ -1,0 +1,32 @@
+$bgColorSucess: rgb(205 224 205);
+.text-middle{
+    text-align: center;
+    margin: 20px;
+    font-family: 'Quicksand';
+
+  }
+.formbox {
+  background-color: $bgColorSucess;
+  padding: 20px;
+  margin-top: 30px;
+  border-radius: 10px;
+  
+  .btn-main{
+    --bs-btn-bg: #009688 !important;
+    --bs-btn-border-color: #009688 !important;
+}
+
+.btn-main:hover{
+   background-color: #607d8b  !important;
+    border-color: #607d8b  !important;
+}
+}
+.tablecard {
+  background: #1987542e;
+  border-radius: 10px;
+  border-color: transparent;
+}
+.addsec{
+  text-align: end;
+  margin-bottom: 10px;
+}
