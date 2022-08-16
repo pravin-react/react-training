@@ -1,34 +1,15 @@
-import { Form ,Container,Row,Button,Col,Table,InputGroup,Modal} from 'react-bootstrap';
+import { Form ,Container,Row,Button,Col,Table,InputGroup,Modal,Alert } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState,useReducer,useEffect  } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import EditProduct from './EditProduct';
+import ProductReducer from './ProductReducer';
+
 const initialState = {
     products: {},  
     error: ''
 };
-function ProductReducer(state, action) {
-    switch (action.type) {
-      case "ADD_PRODUCT":
-        return {  
-          products: action.payload,  
-        }  
-      case "EDIT_PRODUCT":
-        
-        return {  
-          products: action.payload,  
-        } 
-  
-      case "REMOVE_PRODUCT":
-        return {  
-          products: action.payload, 
-        } 
-  
-      default:
-        return state;
-    }
-  }
 
 
 
@@ -37,31 +18,23 @@ function ProductList() {
     const [modalShow, setModalShow] = useState(false);
     const [selectedItem, setSelectedItem] = useState({});
     const [post,setPost]=useState();
+    const [error,setError]=useState();
     const navigate = useNavigate();
     
     const [state, dispatch] = useReducer(ProductReducer, initialState);
-
-    function addProduct(product) {
-      console.log("data",product);
-      axios.post("https://62f37b4aa84d8c9681244fcd.mockapi.io/api/v1/products", { product,})
-                  .then((response) => {
-                      dispatch({
-                        type: "ADD_PRODUCT",
-                        payload: response.data.product
-                      })
-                  });
-    }
 
   
   const clickDelete = (id) => {
       console.log(id);
       axios.delete(`https://62f37b4aa84d8c9681244fcd.mockapi.io/api/v1/products/${id}`)  
       .then(response => {  
-        dispatch({
-          type: "REMOVE_PRODUCT",
-          payload: response.data.product
-        })  
-      
+        setPost(
+          post.filter((post) => {
+             return post.id !== id;
+          })
+       ); 
+      }).catch(err =>{
+        setError(err.message);
       })  
   }
 
@@ -84,6 +57,11 @@ return (
     <><Container>
       <h2 className='text-middle'>Products inventory</h2>
       <Row>
+        {error && 
+      <Alert variant="danger" >
+          {error}
+        </Alert>
+      }
         <Col md={{ span: 10, offset: 1 }} className="addsec">
           <Button
             className='btn-main' onClick={() => addProd()}>
@@ -149,6 +127,7 @@ return (
     </Modal.Body>
   </Modal>
   : null}
+  
   </>
 )
 }

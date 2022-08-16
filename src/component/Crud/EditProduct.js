@@ -1,10 +1,13 @@
 import { Form ,Container,Row,Button,Col,InputGroup} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useState,useEffect  } from 'react';
+import React, { useState,useEffect ,useReducer } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from "react-router-dom";
-
-
+import ProductReducer from './ProductReducer';
+const initialState = {
+    products: {},  
+    error: ''
+};
 function EditProduct() {
     const params = useParams();
     const initialvalues = {productname:"",sku:"",description:"",price:""}
@@ -12,7 +15,8 @@ function EditProduct() {
     const [proErrors, setProErrors] = useState({});
     const navigate = useNavigate();
 
-    
+    const [state, dispatch] = useReducer(ProductReducer, initialState);
+
     useEffect(() => {
         axios.get("https://62f37b4aa84d8c9681244fcd.mockapi.io/api/v1/products/"+ params.id).then((response) => {
             setProValues(response.data.product);
@@ -41,7 +45,10 @@ function EditProduct() {
 
                   })
                   .then((response) => {
-                    console.log(response.data);
+                    dispatch({
+                        type: "EDIT_PRODUCT",
+                        payload: response.data.product
+                      })
                   });
                 navigate("/products");
               }

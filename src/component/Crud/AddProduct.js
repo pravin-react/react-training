@@ -3,32 +3,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState,useReducer,useEffect  } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-import EditProduct from './EditProduct';
+import ProductReducer from './ProductReducer';
+
 const initialState = {
     products: {},  
     error: ''
 };
-function ProductReducer(state, action) {
-    switch (action.type) {
-      case "ADD_PRODUCT":
-        return {  
-          products: action.payload,  
-        }  
-      case "EDIT_PRODUCT":
-        
-        return {  
-          products: action.payload,  
-        } 
-  
-      case "REMOVE_PRODUCT":
-        return {  
-          products: action.payload, 
-        } 
-  
-      default:
-        return state;
-    }
-  }
 
 
 
@@ -53,22 +33,6 @@ function AddProduct() {
                   });
             navigate("/products"); 
     }
-  
-  const clickDelete = (id) => {
-      console.log(id);
-      axios.delete(`https://62f37b4aa84d8c9681244fcd.mockapi.io/api/v1/products/${id}`)  
-      .then(response => {  
-        dispatch({
-          type: "REMOVE_PRODUCT",
-          payload: response.data.product
-        })  
-      
-      })  
-  }
-
-  const clickEdit = (id) => {
-    navigate("/edit-product/"+ id);     
-  }
 
   useEffect(() => {
         axios.get("https://62f37b4aa84d8c9681244fcd.mockapi.io/api/v1/products").then((response) => {
@@ -113,7 +77,6 @@ function AddProduct() {
   
     const validate = (values) =>{
       const errors = {}
-      const pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
     
     if(!values.productname){
       errors.productname = "Field is required";
