@@ -1,4 +1,9 @@
 $bgColorSucess: rgb(205 224 205);
+$mouseOverbtn:#607d8b;
+$normalBtn:#009688;
+$marginbtm:10px;
+
+
 .text-middle{
     text-align: center;
     margin: 20px;
@@ -11,15 +16,16 @@ $bgColorSucess: rgb(205 224 205);
   margin-top: 30px;
   border-radius: 10px;
   
-  .btn-main{
-    --bs-btn-bg: #009688 !important;
-    --bs-btn-border-color: #009688 !important;
-}
+    .btn-main{
+      --bs-btn-bg: #009688 !important;
+      --bs-btn-border-color: #009688 !important;
+  }
 
-.btn-main:hover{
-   background-color: #607d8b  !important;
-    border-color: #607d8b  !important;
-}
+  .btn-main:hover{
+    background-color: $mouseOverbtn  !important;
+      border-color: $mouseOverbtn  !important;
+  }
+
 }
 .tablecard {
   background: #1987542e;
@@ -28,5 +34,8 @@ $bgColorSucess: rgb(205 224 205);
 }
 .addsec{
   text-align: end;
-  margin-bottom: 10px;
+  margin-bottom: $marginbtm;
+}
+button.btn{
+  margin-bottom: $marginbtm;
 }
