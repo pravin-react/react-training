@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { Suspense, lazy }from "react";
 import './App.scss';
 
 import Button from 'react-bootstrap/Button';
@@ -27,10 +27,15 @@ import ReducerHook from "./component/Basic/Hooks";
 import LoginUseReducer from "./component/Basic/HooksTwo";
 import FetchApi from "./component/FetchApi";
 import FetchAxios from "./component/FetchAxios";
-import ProductList from "./component/Crud/ProductList";
-import AddProduct from "./component/Crud/AddProduct";
-import EditProduct from "./component/Crud/EditProduct";
+//import ProductList from "./component/Crud/ProductList";
+// import AddProduct from "./component/Crud/AddProduct";
+// import EditProduct from "./component/Crud/EditProduct";
 
+const ProductList = lazy(() => import("./component/Crud/ProductList"));
+const AddProduct = lazy(() => import("./component/Crud/AddProduct"));
+const EditProduct = lazy(() => import("./component/Crud/EditProduct"));
+const Counter = lazy(() => import("./component/Counter/Counter"));
+const Images = lazy(() => import("./component/LazyloadImages/Images"));
 function App() {
   const userData = JSON.parse(localStorage.getItem("loggedin"));
   const itemValue = sessionStorage.getItem("item_key");
@@ -38,6 +43,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
+      <Suspense fallback={<div>Loading...</div>}>
         <Navbar bg="dark" variant="dark">
             <Container fluid>
                 <Navbar.Brand>React Training</Navbar.Brand>
@@ -75,11 +81,13 @@ function App() {
           <Route path="/add-product" element={<AddProduct />} />
           <Route path="/edit-product" element={<EditProduct />} />
           <Route path="/edit-product/:id" element={<EditProduct />} />
+          <Route path="/counter" element={<Counter />} />
+          <Route path="/lazy" element={<Images />} />
           <Route path="*" element={<Notfound />} />
         </Routes>
+        </Suspense>
       </BrowserRouter>
     </div>
   );
 }
-
 export default App;
